@@ -47,5 +47,9 @@
 <td>ArithrneticException</td>
 <td>Арифметическая ошибка, такая как деление на ноль</td>
 </tr>
+<tr>
+<td>ArrayindexOutOfBoundsException</td>
+<td>Выход за допустимые пределы индекса в массиве</td>
+</tr>
 </tbody>
 </table>

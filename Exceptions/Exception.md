@@ -18,6 +18,19 @@
 Исключения типа Error применяется исполняющей средой Java для указания ошибок, связанных с самой средой. Примером такой ошибки является переполнение
 стека. 
 
+
+              ---> Throwable <--- 
+              |    (checked)     |
+              |                  |
+              |                  |
+      ---> Exception           Error
+      |    (checked)        (unchecked)
+      |
+RuntimeException
+  (unchecked)
+
+
+
 Любое исключение, которое не перехвачено вашей программой, в конечном итоге бужет обработано стандартным 
 обработчиком. Стандартный обработчик отображает строку с описанием исключения, выводит трассировку 
 стека от точки, где произошло исключение, и прекращает работу программы. 
@@ -50,6 +63,59 @@
 <tr>
 <td>ArrayindexOutOfBoundsException</td>
 <td>Выход за допустимые пределы индекса в массиве</td>
+</tr>
+<tr>
+<td>ArrayStoreException</td>
+<td>Присваивание элементу массива значения несовместимого типа</td>
+</tr>
+<tr>
+<td>ClassCastException</td>
+<td>Недопустимое приведение</td>
+</tr>
+<tr>
+<td>EnurnConstantNotPresentException</td>
+<td>Попытка использования неопределенного значения перечисления</td>
+</tr>
+<tr>
+<td>IllegalArgumentException</td>
+<td>Использование недопустимого аргумента при вызове метода</td>
+</tr>
+<tr>
+<td>IllegalStateException</td>
+<td>Некорректное состояние среды или приложения</td>
+</tr>
+<tr>
+<td>NullPointerException</td>
+<td>Недопустимое использование ссылки nul l</td>
+</tr>
+<tr>
+<td>NumЬerFormatException</td>
+<td>Недопустимое преобразование строки в числовой формат</td>
+</tr>
+</tbody>
+</table>
+
+
+ Классы nроверяемых искnючений Jаva, оnределенные в java.lang
+<table>
+<thead>
+<tr>
+<th>Исключение</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ClassNotFoundException</td>
+<td>Класс не найден</td>
+</tr>
+<tr>
+<td>IllegalAccessException</td>
+<td>Доступ к классу запрещен</td>
+</tr>
+<tr>
+<td>InterruptedException</td>
+<td>Один поток был прерван другим потоком</td>
 </tr>
 </tbody>
 </table>

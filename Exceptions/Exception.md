@@ -136,13 +136,14 @@ Unchecked exceptions are exceptions that the Java compiler does not require us t
 
 #### throws
 The simplest way to “handle” an exception is to rethrow it:
-
- public int getPlayerScore(String playerFile)
+```
+public int getPlayerScore(String playerFile)
   throws FileNotFoundException {
  
     Scanner contents = new Scanner(new File(playerFile));
     return Integer.parseInt(contents.nextLine());
- }
+}
+```
 
 Because FileNotFoundException is a checked exception, this is the simplest way to satisfy the compiler, but it does mean that anyone that calls our method now needs to handle it too!
 
@@ -163,8 +164,8 @@ public int getPlayerScore(String playerFile) {
 ```
  
 Or by performing recovery steps:
-
- public int getPlayerScore(String playerFile) {
+```
+public int getPlayerScore(String playerFile) {
     try {
         Scanner contents = new Scanner(new File(playerFile));
         return Integer.parseInt(contents.nextLine());
@@ -172,7 +173,8 @@ Or by performing recovery steps:
         logger.warn("File not found, resetting score.");
         return 0;
     }
- }
+}
+```
 
 #### finally
 

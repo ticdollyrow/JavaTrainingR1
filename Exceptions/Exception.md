@@ -136,6 +136,7 @@ Unchecked exceptions are exceptions that the Java compiler does not require us t
 
 #### throws
 The simplest way to “handle” an exception is to rethrow it:
+
  public int getPlayerScore(String playerFile)
   throws FileNotFoundException {
  
@@ -149,6 +150,7 @@ parseInt can throw a NumberFormatException, but because it is unchecked, we aren
 
 #### try-catch
 If we want to try and handle the exception ourselves, we can use a try-catch block. We can handle it by rethrowing our exception:
+
  public int getPlayerScore(String playerFile) {
     try {
         Scanner contents = new Scanner(new File(playerFile));
@@ -156,9 +158,10 @@ If we want to try and handle the exception ourselves, we can use a try-catch blo
     } catch (FileNotFoundException noFile) {
         throw new IllegalArgumentException("File not found");
     } 
-}
-
+ }
+ 
 Or by performing recovery steps:
+
  public int getPlayerScore(String playerFile) {
     try {
         Scanner contents = new Scanner(new File(playerFile));

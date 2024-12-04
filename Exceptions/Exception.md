@@ -29,6 +29,9 @@
      RuntimeException
      (unchecked)
 
+Checked exceptions are exceptions that the Java compiler requires us to handle. We have to either declaratively throw the exception up the call stack, or we have to handle it ourselves. 
+Unchecked exceptions are exceptions that the Java compiler does not require us to handle.
+
 Любое исключение, которое не перехвачено вашей программой, в конечном итоге бужет обработано стандартным 
 обработчиком. Стандартный обработчик отображает строку с описанием исключения, выводит трассировку 
 стека от точки, где произошло исключение, и прекращает работу программы. 
@@ -127,3 +130,41 @@
 (checked или unchecked) будет такой же как и “группа” суперкласса. В собственных классах
 исключений даже не обязательно добавлять какие-либо поля или методы, их присутствия в системе
 типов уже достаточно, чтобы пользоваться ими как исключениями.
+
+
+### Handling Exceptions
+
+#### throws
+The simplest way to “handle” an exception is to rethrow it:
+public int getPlayerScore(String playerFile)
+  throws FileNotFoundException {
+ 
+    Scanner contents = new Scanner(new File(playerFile));
+    return Integer.parseInt(contents.nextLine());
+}
+
+Because FileNotFoundException is a checked exception, this is the simplest way to satisfy the compiler, but it does mean that anyone that calls our method now needs to handle it too!
+
+parseInt can throw a NumberFormatException, but because it is unchecked, we aren’t required to handle it.
+
+#### try-catch
+If we want to try and handle the exception ourselves, we can use a try-catch block. We can handle it by rethrowing our exception:
+public int getPlayerScore(String playerFile) {
+    try {
+        Scanner contents = new Scanner(new File(playerFile));
+        return Integer.parseInt(contents.nextLine());
+    } catch (FileNotFoundException noFile) {
+        throw new IllegalArgumentException("File not found");
+    }
+}
+
+Or by performing recovery steps:
+public int getPlayerScore(String playerFile) {
+    try {
+        Scanner contents = new Scanner(new File(playerFile));
+        return Integer.parseInt(contents.nextLine());
+    } catch ( FileNotFoundException noFile ) {
+        logger.warn("File not found, resetting score.");
+        return 0;
+    }
+}

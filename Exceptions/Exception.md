@@ -150,16 +150,17 @@ parseInt can throw a NumberFormatException, but because it is unchecked, we aren
 
 #### try-catch
 If we want to try and handle the exception ourselves, we can use a try-catch block. We can handle it by rethrowing our exception:
-`
+
+```
 public int getPlayerScore(String playerFile) {
-            try {
+    try {
         Scanner contents = new Scanner(new File(playerFile));
         return Integer.parseInt(contents.nextLine());
     } catch (FileNotFoundException noFile) {
         throw new IllegalArgumentException("File not found");
-   } 
+    }
 }
- `
+```
  
 Or by performing recovery steps:
 

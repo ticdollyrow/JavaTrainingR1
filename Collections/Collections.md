@@ -320,17 +320,43 @@ Integer[] targetArray = sourceList.toArray(new Integer[0]);
 
 ### Queue Interface
 Queue interface maintains the first-in-first-out order.
+The most common classes that implement the Queue interface in Java are LinkedList and PriorityQueue. 
 
-## PriorityQueue
-Реализует очередь с приоритетом через двоичную кучу (binary heap).
+Некоторые методы генерируют ClassCastException, коrда объект несовместим с элементами в очереди. Исключение NullPointerException возникает,
+если предпринимается попытка сохранить объект null, а элементы null в очереди не разрешены. Исключение I llegalArgumentException происходит
+в случае использования недопустимого аргумента.
+Исключение I llegalStateException генерируется при попытке добавления элемента в заполненную очередь фиксированной длины. Исключение
+NoSuchElementException возникает при попытке удаления элемента из пустой очереди.
+Элементы можно удалять только из головы очереди.
+существуют два метода для получения и удаления элементов:
+poll ( ) и remove ( ) . 
+Разница между ними в том, что poll ( ) возвращает null, если очередь пуста, а remove ( ) генерирует исключение.
+метод offer ( ) только пытается добавить элемент в очередь. Поскольку некоторые очереди имеют фиксированную длину и могут
+быть заполнены, метод offer ( ) может завершиться неудачей.
+
+
+#### PriorityQueue
+Реализует очередь с приоритетом через двоичную кучу (binary heap). Он создает очередь с приоритетом на основе компаратора очереди.
 Выборка/удаление «наименьшего» или «наибольшего» элемента – O(log n).
 PriorityQueue doesn't allow null values to be stored in the queue.
+
+В классе PriorityQueue определены семь конструкторов:
+PriorityQueue ()
+PriorityQueue(int capacity)
+PriorityQueue(Comparator<? super Е> comp)
+PriorityQueue(int capacity, Comparator<? super Е> comp)
+PriorityQueue(Collection<? extends Е> с)
+PriorityQueue(PriorityQueue<? extends Е> с)
+PriorityQueue(SortedSet<? extends Е> с)
+
 
 ### Deque Interface
 Deque interface extends the Queue interface. In Deque, we can remove and add the elements from both the side. Deque stands for a double-ended queue which enables us to perform the operations at both the ends.
 
 ## ArrayDeque
 ArrayDeque class implements the Deque interface. 
+Null elements are not allowed in the ArrayDeque.
+
 ArrayDeque is faster than ArrayList and Stack and has no capacity restrictions.
 Реализован на массиве, использует кольцевой буфер.
 Быстрые операции добавления/удаления с обоих концов (O(1) амортизированно).
@@ -394,17 +420,81 @@ SortedSet<data-type> set = new TreeSet();
 ```
 ### TreeSet
 сортирует элементы
-Like HashSet, TreeSet also contains unique elements. However, the access and retrieval time of TreeSet is quite fast. The elements in TreeSet stored in ascending order.
+The important points about the Java TreeSet class are:
+
+Java TreeSet class contains unique elements only like HashSet.
+Java TreeSet class access and retrieval times are quiet fast.
+Java TreeSet class doesn't allow null element.
+Java TreeSet class is non synchronized.
+Java TreeSet class maintains ascending order.
+
+The TreeSet can only allow those generic types that are comparable. 
+
 ```
 TreeSet<Human> humans = new TreeSet<>();
 класс Human должен имплементировать интерфейс Comparable и реализовать метод int compareTo( возвращает целочисленное значение. Если 0, то равны, если положительное, то первый объект юольше второго, если отрицательное, то наоборот )
 
 ```
+If we add an object of the class that is not implementing the Comparable interface, the ClassCast Exception is raised.
+
+
+TreeSet Vs. HashSet
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>TreeSet</th>
+<th>HashSet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Underlying Data Structure</td>
+<td>Red-Black Tree</td>
+<td>Hash Table/td>
+</tr>
+<tr>
+<td>Ordering of Elements</td>
+<td>Keeps elements sorted, which facilitates ordered traversal and quick-range searches.</td>
+<td>Does not maintain any order; element arrangement is determined by the hash function.</td>
+</tr>
+<tr>
+<td>Performance for Basic Operations</td>
+<td>Somewhat increased temporal complexity; operations like add, delete, and contain are O(logN).</td>
+<td>Constant-time complexity O(1) for basic operations like add, delete, and contain, making it highly efficient.</td>
+</tr>
+<tr>
+<td>Best Use Case</td>
+<td>Better suited for applications requiring ordered data management, such as range queries or sequential access.</td>
+<td>Ideal for scenarios where quick retrieval and manipulation are more important than element order.</td>
+</tr>
+<tr>
+<td>Sorting</td>
+<td>Automatically sorts elements according to their natural ordering or a specified comparator.</td>
+<td>No sorting of elements; storage is hash-based.</td>
+</tr>
+<tr>
+<td>Application Suitability</td>
+<td>Preferred for applications where elements need to be maintained in a sorted manner.</td>
+<td>More suitable for applications requiring fast access and where element order is not a concern.</td>
+</tr>
+</tbody>
+</table>
+
+
+### EnumSet
+Он предназначен для использования с объектами типа enum и является обобщенным классом с таким объявлением:
+class EnumSet<E extends Enum <E> >
+Конструкторы в классе EnumSet не определены. Взамен для создания объектов применяются фабричные методы
+
+
 
 ### Map
+Интерфейс Мар сопоставляет уникальные ключи со значениями. не реализует интерфейс Collection
 A Map cannot contain duplicate keys; each key can map to at most one value. The Map interface is used to store key-value pairs, where each key is unique, and it provides an efficient way to retrieve, update, and manipulate data based on keys.
+You can use any object as a key, which must implement hashCode() and equals() methods
 
-entrySet метод 
+entrySet метод  - It returns the Set view containing all the keys and values.
 ```
    // Iterate through the HashMap and print each key-value pair.  
         for (Map.Entry<Integer, String> entry : numbersMap.entrySet()) {  
@@ -412,21 +502,49 @@ entrySet метод
         }  
 ```
 
+
 ## HashMap
 Быстрый доступ/вставка/удаление по ключу (O(1) амортизированно).
 Порядок ключей не гарантирован.
 
 ## LinkedHashMap
 Наследует свойства HashMap, но хранит порядок вставки 
+
 ## TreeMap
+TreeMap in Java is a sorted map implementation that stores key-value pairing in a Red-Black tree structure. 
+This data structure offers operations of O(log n) time-efficiency for insertion, deletion, and retrieval.
+конструкторы, которые определены в TreeMap:
+TreeMap ( )
+TreeMap ( Comparator<? super К> comp )
+TreeMap (Map<? extends К, ? extends V> m)
+TreeMap ( SortedMap<K, ? extends V> sm)
 
 метод класса Object  hashcode
 
 
+## Компараторы
 метод Collections.sort
 если класс не может имплементировать интерфейс Comparable можно использовать Comparator
 
+
+interface Comparator<T>
+метод compare ( ) сравнивает два элемента по порядку:
+int compare ( T obj1 , Т obj2 )
+Обычно метод compare ( ) возвращает ноль, если объекты равны, положительное значение, если obj1 больше obj2, и отрицательное значение, если obj1 меньше obj2. 
+
+
+С помощью метода reversed ( ) можно получить компаратор, изменяющий
+упорядочение компаратора, для которого он вызывается, на противоположное:
+default Comparator<T> reversed ( )
+
+
+Другим стандартным методом является thenComparing ( ) . Он возвращает
+компаратор, который выполняет второе сравнение, когда результат первого
+сравнения указывает, что сравниваемые объекты равны.
+
+
 Интерфейс Comparator определяет, каким образом сравниваются два объекта
+public void sort(List list, Comparator c): is used to sort the elements of List by the given Comparator.
 ```
 Collections.sort(humans, Comparator
         .comparingInt(Human::getLimit)
@@ -440,3 +558,15 @@ Collections.sort(humans, Comparator
  Comparator<Person> personByNameComparator = Comparator.comparing(Person::name).thenComparing(Person::age);
  persons.sort(personByNameComparator);
 ```
+
+Java Comparable interface
+This interface is found in java.lang package and contains only one method named compareTo(Object). 
+
+public int compareTo(Object obj): It is used to compare the current object with the specified object. It returns
+positive integer, if the current object is greater than the specified object.
+negative integer, if the current object is less than the specified object.
+zero, if the current object is equal to the specified object.
+
+
+алгоритмы определены в
+виде статических методов класса Collections

@@ -1,6 +1,7 @@
 package org.example.task1;
 
 import javax.xml.namespace.QName;
+import java.util.Comparator;
 
 public class Melon {
     private final String type;
@@ -23,4 +24,8 @@ public class Melon {
     public String toString() {
         return type + " " + weight;
     }
+
+
 }
+
+

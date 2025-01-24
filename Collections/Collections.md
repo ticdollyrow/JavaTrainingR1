@@ -162,12 +162,17 @@ System.out.println(itr.next());
 The ArrayList in Java can also have duplicate elements.
 Сохраняет порядок вставки: Java ArrayList гарантирует порядок, в котором элементы попадают в него. При просмотре ArrayList с помощью итерации доступ к элементам осуществляется в той же последовательности, в которой они были добавлены.
 ArrayList не синхронизирован. Этот факт означает, что ArrayList не является потокобезопасным, поэтому при одновременном обращении к ArrayList нескольких потоков могут возникнуть проблемы с одновременной модификацией.
-Поддержка случайного доступа: ArrayList позволяет реализовать быстрые операции произвольного доступа, используя позиции индексов элементов. Это связано с тем, что для внутренней реализации используется структура массива, которая обеспечивает постоянный доступ к элементам по индексу.
-Более медленные манипуляции по сравнению с LinkedList: Операции манипулирования, такие как вставка и удаление, в ArrayList могут выполняться медленнее, чем в LinkedList. Так, в ArrayList приходится выполнять сдвиг элементов, когда элементы вставляются или удаляются из любого места, кроме конца списка. 
-Требуются классы-обертки для примитивных типов: ArrayList не имеет прямой поддержки примитивных типов данных, таких как `int`, `float` и `char`. Вместо этого ему требуются классы-обертки, такие как `Integer`, `Float`, `Character` и т. д., для этих примитивных типов.
-Динамическое изменение размера: ArrayList расширяется или сжимается при добавлении или удалении элементов, чтобы соответствовать требуемому новому размеру. Благодаря адаптивному изменению размера можно управлять онлайн-коллекциями без физического изменения размера.
+Поддержка случайного доступа: ArrayList позволяет реализовать быстрые операции произвольного доступа, используя позиции индексов элементов. Это связано с тем, что для внутренней реализации используется структура массива, которая обеспечивает 
+постоянный доступ к элементам по индексу.
+Более медленные манипуляции по сравнению с LinkedList: Операции манипулирования, такие как вставка и удаление, в ArrayList могут выполняться медленнее, чем в LinkedList. Так, в ArrayList приходится выполнять сдвиг элементов, 
+когда элементы вставляются или удаляются из любого места, кроме конца списка. 
+Требуются классы-обертки для примитивных типов: ArrayList не имеет прямой поддержки примитивных типов данных, таких как `int`, `float` и `char`. Вместо этого ему требуются классы-обертки, такие как `Integer`, `Float`, `Character` и т. д., 
+для этих примитивных типов.
+Динамическое изменение размера: ArrayList расширяется или сжимается при добавлении или удалении элементов, чтобы соответствовать требуемому новому размеру. Благодаря адаптивному изменению размера можно управлять 
+онлайн-коллекциями без физического изменения размера.
 
-Serialization and deserialization in Java are processes used to convert objects into byte streams for storage or transmission and then reconstruct the objects from those byte streams, respectively. This mechanism allows objects to be saved to files, sent over networks, or stored in databases.
+Serialization and deserialization in Java are processes used to convert objects into byte streams for storage or transmission and then reconstruct the objects from those byte streams, respectively. 
+This mechanism allows objects to be saved to files, sent over networks, or stored in databases.
 ```
 import java.util.*;  
 class ArrayList6 {  
@@ -264,7 +269,7 @@ Manipulation with LinkedList is faster than ArrayList because it uses a doubly l
 LinkedList class can act as a list and queue both because it implements List and Deque interfaces.
 4) ArrayList is better for storing and accessing data.
 LinkedList is better for manipulating data.
-5) The memory location for the elements of an ArrayList is contiguous.
+5) The memory location for the elements of an ArrayList is contiguous.(смежный)
 The location for the elements of a linked list is not contagious.
 6) Generally, when an ArrayList is initialized, a default capacity of 10 is assigned to the ArrayList.
 There is no case of default capacity in a LinkedList. In LinkedList, an empty list is created when a LinkedList is initialized.

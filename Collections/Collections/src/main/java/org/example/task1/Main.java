@@ -33,5 +33,31 @@ public class Main {
         } ));
 
         System.out.println(Arrays.toString(melons));
+
+        System.out.println("BubbleSort");
+        Comparator<Melon> byType = Comparator.comparing(Melon::getType);
+        bubleSortOptimizedWithComparator(melons, byType);
+        System.out.println(Arrays.toString(melons));
+
+
+        Comparator<Melon> comparator = new MelonComparator();
+        bubleSortOptimizedWithComparator(melons, comparator);
+        System.out.println(Arrays.toString(melons));
+
     }
+
+    public static <T>  void bubleSortOptimizedWithComparator(T[] arr, Comparator<? super T> c){
+        int length = arr.length - 1;
+
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length - i; j++){
+                if(c.compare(arr[j],arr[j+1]) > 0){
+                    T tmp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = tmp;
+                }
+            }
+        }
+    }
+
 }

@@ -122,6 +122,7 @@ https://www.javatpoint.com/java-arraylist
 
 -----> extends
 –––––> implements
+
 ArrayList -----> AbstractList –––––> List –––––> Collection –––––> Iterable
 ```
 public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, Serializable  
@@ -141,6 +142,10 @@ ArrayList(int capacity)
 хороши, когда нужно часто получать элемент по индексу
 Операция удаления не дешевая, т.к. нужно перестраивать массив
 Операция вставки тоже дорогая(в середину, в начало) т.к. нужно двигать элементы
+Операции с постоянным временем O(1) - get(), set( ), size()
+Операции с линейным временем O(n) - remove(), contains(), ensureCapacity(), trimToSize()
+Особенность метода add() - если требуется расширение массива, то O(n)  ( размер увеличивается в 1,5 раза )
+                            если не требуется расширение массива, то O(1)
 
 ```
 import java.util.*;  
@@ -437,9 +442,11 @@ The TreeSet can only allow those generic types that are comparable.
 
 ```
 TreeSet<Human> humans = new TreeSet<>();
-класс Human должен имплементировать интерфейс Comparable и реализовать метод int compareTo( возвращает целочисленное значение. Если 0, то равны, если положительное, то первый объект юольше второго, если отрицательное, то наоборот )
-
 ```
+класс Human должен имплементировать интерфейс Comparable и реализовать метод int compareTo( )возвращает целочисленное значение. 
+Если 0, то равны, если положительное, то первый объект больше второго, если отрицательное, то наоборот 
+
+
 If we add an object of the class that is not implementing the Comparable interface, the ClassCast Exception is raised.
 
 
@@ -573,5 +580,8 @@ negative integer, if the current object is less than the specified object.
 zero, if the current object is equal to the specified object.
 
 
-алгоритмы определены в
-виде статических методов класса Collections
+алгоритмы определены в виде статических методов класса Collections
+
+
+Перетасовать список довольно просто посредством метода
+Collections.shuffle(List<?> list).

@@ -36,17 +36,21 @@ public class Main {
 
         System.out.println("BubbleSort");
         Comparator<Melon> byType = Comparator.comparing(Melon::getType);
-        bubleSortOptimizedWithComparator(melons, byType);
+        bubleSortWithComparator(melons, byType);
         System.out.println(Arrays.toString(melons));
 
 
         Comparator<Melon> comparator = new MelonComparator();
-        bubleSortOptimizedWithComparator(melons, comparator);
+        bubleSortWithComparator(melons, comparator);
+        System.out.println(Arrays.toString(melons));
+
+        Comparator<Melon> inserionComparator = Comparator.comparing(Melon::getType).thenComparing(Melon::getWeight);
+        insertionSort(melons, inserionComparator);
         System.out.println(Arrays.toString(melons));
 
     }
 
-    public static <T>  void bubleSortOptimizedWithComparator(T[] arr, Comparator<? super T> c){
+    public static <T>  void bubleSortWithComparator(T[] arr, Comparator<? super T> c){
         int length = arr.length - 1;
 
         for(int i = 0; i < length; i++){
@@ -57,6 +61,21 @@ public class Main {
                     arr[j+1] = tmp;
                 }
             }
+        }
+    }
+
+
+    public static <T>  void insertionSort(T[] arr, Comparator<? super T> c){
+        int length = arr.length;
+
+        for(int i = 1; i < length; i++){
+            T keyValue = arr[i];
+            int j = i -1;
+            while (j >= 0 && c.compare(keyValue, arr[j]) < 0){
+                arr[j+1] = arr[j];
+                j--;
+            }
+            arr[j+1] = keyValue;
         }
     }
 

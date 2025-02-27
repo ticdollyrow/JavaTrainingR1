@@ -9,45 +9,73 @@ import java.util.Scanner;
 public class Client {
     private static final int PORT = 8190;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        try( Socket socket = new Socket("localhost", PORT);
-             final DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-             final DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-        ) {
+    private Socket socket;
+    private DataInputStream dataInputStream;
+    private DataOutputStream dataOutputStream;
 
-            // Поток для чтения сообщений от сервера
-            new Thread(() -> {
-                try {
-                    while (true) {
-                        String serverMessage = dataInputStream.readUTF();
-                        System.out.println(serverMessage);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+    public void openConnection(){
+
+        try{
+            socket = new Socket("localhost", PORT);
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
+            new Thread(() -> listenServer())
+                    .start();
+
+        }catch (IOException e){
+            e.getStackTrace();
+        }
+    }
+
+    public void sendMessage(String message) {
+        try {
+            dataOutputStream.writeUTF(message);
+        } catch (IOException e) {
+            e.getStackTrace();
+        }
+    }
+
+    public void closeConnection(){
+        if(dataInputStream !=null){
+            try {
+                dataInputStream.close();
+            } catch (IOException e) {
+                e.getStackTrace();
+            }
+        }
+
+        if(dataOutputStream != null){
+            try {
+                dataOutputStream.close();
+            } catch (IOException e) {
+                e.getStackTrace();
+            }
+        }
+
+        if(socket != null){
+            try {
+                socket.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void listenServer(){
+        try {
+            while (true) {
+                String strFromServer = dataInputStream.readUTF();
+                System.out.println("Server " + strFromServer );
+                if (strFromServer.equalsIgnoreCase("/end")) {
+                    System.out.println("End OpenConnection");
+                    break;
                 }
-            }).start();
-
-            // Отправка сообщений на сервер
-            new Thread(() -> {
-                try {
-                    while (true) {
-                        final String s = scanner.nextLine();
-                        if(s.equals("end")){
-                            break;
-                        }
-                        dataOutputStream.writeUTF(s);
-                    }
-                }catch (IOException exception){
-                    exception.printStackTrace();
-                }
-            }).start();
-
-
-        }catch(IOException exception){
-            exception.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }finally {
-
+            closeConnection();
         }
     }
 }

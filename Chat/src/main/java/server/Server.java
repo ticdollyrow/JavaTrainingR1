@@ -1,7 +1,5 @@
 package server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,6 +10,11 @@ import java.util.Map;
 
 public class Server {
     private static final int PORT = 8190;
+
+    public AuthService getAuthService() {
+        return authService;
+    }
+
     private final AuthService authService;
     private final List<ClientHandler> clientHandlers;
 
@@ -34,6 +37,7 @@ public class Server {
                 for(int i = 0; i < 3; i++){
                    userData.put("login"+i, new UserData("login"+i, "pass"+1, "nick"+i));
                 }
+                System.out.println();
             }
 
             private class UserData{
@@ -48,27 +52,33 @@ public class Server {
                 }
             }
         };
-    }
 
-    public static void main(String[] args) {
-
-        Socket clientSocket = null;
         try(final ServerSocket serverSocket = new ServerSocket(PORT)){
-            System.out.println("Server ......");
-
-            clientSocket = serverSocket.accept();
-            final DataInputStream dataInputStream = new DataInputStream(clientSocket.getInputStream());
-            final DataOutputStream dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-            while (true) {
-
-                final String s = dataInputStream.readUTF();
-                System.out.println(s);
-
-                dataOutputStream.writeUTF("Message - " + s);
+            while (true){
+                final Socket clientSocket = serverSocket.accept();
+                final ClientHandler clientHandler = new ClientHandler(clientSocket, this);
+                
             }
-
-        }catch (IOException exception){
-            exception.printStackTrace();
+        }catch (IOException ioException){
+            System.out.println(ioException.getMessage());
         }
     }
+
+    public boolean isNickExist(String nick){
+        for(ClientHandler client: clientHandlers){
+            if(client.getNick().equals(nick)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addConnectedClient(ClientHandler client){
+        clientHandlers.add(client);
+    }
+
+    public void unsubscribe(ClientHandler client){
+        clientHandlers.remove(client);
+    }
+
 }
